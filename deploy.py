@@ -82,6 +82,9 @@ image = (
         "soundfile==0.13.1",
         f"indextts @ git+https://github.com/index-tts/index-tts.git@{INDEXTTS_GIT_REF}",
     )
+    # indextts' dependency chain resolves protobuf down to 3.x, which breaks
+    # the Modal client runtime baked into the container. Re-pin it last.
+    .pip_install("protobuf==5.29.5")
 )
 
 with image.imports():
